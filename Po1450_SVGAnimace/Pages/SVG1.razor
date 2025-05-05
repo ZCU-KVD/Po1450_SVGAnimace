@@ -4,13 +4,39 @@
 
 <RadzenCard>
     <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="1rem" Wrap="FlexWrap.Wrap">
-        <RadzenButton Text="Přidat obrazec" Icon="add_circle" ButtonStyle="ButtonStyle.Primary" />
+        <RadzenButton Text="Přidat obrazec" Icon="add_circle" ButtonStyle="ButtonStyle.Primary" Click="PridatObrazec"/>
         <RadzenButton Text="Odebrat poslední obrazec" Icon="delete" ButtonStyle="ButtonStyle.Danger" />
         <RadzenButton Text="Spustit posun" Icon="auto_awesome_motion" ButtonStyle="ButtonStyle.Primary" />
         <RadzenButton Text="Zastavit posun" Icon="pan_tool" ButtonStyle="ButtonStyle.Secondary" />
     </RadzenStack>
 </RadzenCard>
 
+<RadzenCard class="my-2" Style=@($"width:{SVGWidth+30}px;")>
+    <svg width="@SVGWidth" height="@SVGHeight" style="border: black solid" xmlns="http://www.w3.org/2000/svg">
+        @foreach (var item in SvgObrazceList)
+        {
+            @switch (item.TypTvary)
+            {
+				case Models.TypTvaru.Ctverec:
+					Models.Ctverec ctverec = (Models.Ctverec)item;
+                    <rect width="@ctverec.StranaA" height="@ctverec.StranaA" x="@ctverec.PozX" y="@ctverec.PozY" style="fill:rgb(@ctverec.Barva.R,@ctverec.Barva.G,@ctverec.Barva.B);stroke-width:2;stroke:black" />
+					break;
+
+                case Models.TypTvaru.Obdelnik:
+                    Models.Obdelnik obdelnik = (Models.Obdelnik)item;
+                    <rect width="@obdelnik.StranaA" height="@obdelnik.StranaB" x="@obdelnik.PozX" y="@obdelnik.PozY" style="fill:rgb(@obdelnik.Barva.R,@obdelnik.Barva.G,@obdelnik.Barva.B);stroke-width:2;stroke:black" />
+                    break;
+				case Models.TypTvaru.Kruh:
+					Models.Kruh kruh = (Models.Kruh)item;
+                    <circle r="@kruh.Polomer" cx="@kruh.PozX" cy="@kruh.PozY" fill="rgb(@kruh.Barva.R,@kruh.Barva.G,@kruh.Barva.B)" stroke="black" stroke-width="2" />
+                    break;
+            }
+        }
+
+
+       
+    </svg>
+</RadzenCard>
 @code {
 
 }
